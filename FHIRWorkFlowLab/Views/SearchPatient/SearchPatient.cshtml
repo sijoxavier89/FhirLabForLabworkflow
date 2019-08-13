@@ -1,0 +1,24 @@
+﻿@model FHIRWorkFlowLab.Models.SearchPatient.SearchPatientViewModel
+
+@{
+    ViewBag.Title = "Search Patient";
+}
+
+<div class="jumbotron">
+  @using (Html.BeginForm("PatientDetails", "SearchPatient", FormMethod.Post))
+  {
+    <form>
+        <div class="form-group">
+            <h4 style="vertical-align:middle">
+                Enter Patient MRN :
+                @Html.TextBoxFor(m => m.searchPatientMRN, new { Style = "vertical-align: middle;" })
+                <input type="submit" value="Get Details" class="btn btn btn-info my-2 my-sm-0" /> <br /><br /><hr>
+                <a href="/LabList/List" class="btn btn-success my-2 my-sm-0" role="button" aria-pressed="true">View Lab Result</a>
+                <a href="/RegisterPatient/PatientRegister" class="btn btn-success my-2 my-sm-0" role="button" aria-pressed="true">Register Patient</a>
+            </h4>
+        </div>  
+    </form>
+  }
+</div>
+
+

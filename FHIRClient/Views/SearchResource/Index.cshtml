@@ -1,0 +1,32 @@
+﻿@model FHIRClient.Models.SearchResourceViewModel
+
+@{
+    ViewBag.Title = "Search Resource";
+}
+
+<div>
+    @using (Html.BeginForm("GetResource", "SearchResource", FormMethod.Post))
+    {
+        <div class="body-content">
+            <label>Enter Patient ID : </label>
+
+            @Html.TextBoxFor(m => m.patientId)
+
+            &nbsp;&nbsp;
+
+            <label>Resource : </label>
+
+            @Html.DropDownListFor(m => m.resourceInfo, new List<SelectListItem>
+                                        {   new SelectListItem{Text="Patient", Value="PatientInfo"},
+                                            new SelectListItem{Text="Encounter", Value="EncounterInfo"},
+                                            new SelectListItem{Text="Medication", Value="MedicationRequest"},
+                                            new SelectListItem{Text="Condition", Value="ConditionInfo"},
+                                            new SelectListItem{Text="Observation", Value="ObservationInfo"}
+                                        })
+
+            &nbsp;&nbsp;
+            <input type="submit" value="Get Data" />
+        </div>
+    }
+</div>
+

@@ -1,0 +1,81 @@
+﻿@model FHIRWorkFlowLab.Models.LabRequest.LabListViewModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>REQUESTS</h2>
+<table class="table">
+    <tr>
+        <th>
+            Lab Id
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Practitioner Id
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model.LabList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PractitionerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @if (item.Status == "Active")
+                {
+                    if ((string)Session["role"] == "labTechnician")
+                    {
+                        @Html.ActionLink("Lab Test", "Labtest", new { procedureId = item.Id, status = item.Status, patientId = item.PatientID, practitionerId = item.PractitionerId, patientname = item.PatientName })
+                    }
+                    else
+                    {
+                        <a href="#" style="color:gray" title="Permission Denied" disabled>Lab Test</a>
+                    }
+
+                }
+                else
+                {
+                   <a href="@Url.Action("ShowResult","ViewResult")@("?procedureId="+@item.Id)">View Test</a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModalScrollable">View Raw Json</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Json View</h5>
+            </div>
+            <div class="modal-body">
+                <pre>@Model.FhirRequest</pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

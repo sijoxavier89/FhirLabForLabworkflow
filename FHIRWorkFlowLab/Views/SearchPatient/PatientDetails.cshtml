@@ -1,0 +1,100 @@
+﻿@model FHIRWorkFlowLab.Models.SearchPatient.SearchPatientViewModel
+
+@{
+    ViewBag.Title = "Patient Details";
+}
+
+@if (Model.patient != null)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align:center">Patient Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Patient ID :</th>
+                <td>
+                    @foreach (var item in Model.patient.Identifier)
+                    {
+                        <text>@item.Value</text>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Patient Name :</th>
+                <td>@Model.patient.Name[0]</td>
+            </tr>
+            <tr>
+                <th scope="row">Patient Date Of Birth :</th>
+                <td>@Model.patient.BirthDate</td>
+            </tr>
+            <tr>
+                <th scope="row">Gender :</th>
+                <td>@Model.patient.Gender</td>
+            </tr>
+            <tr>
+                <th scope="row">Patient Address :</th>
+                <td>
+                    @foreach (var items in Model.patient.Address)
+                    {
+                        foreach (var add in items.Line)
+                        {
+                            <text> @add /    </text>
+                        }
+                        <text> @items.City / @items.State / @items.Country / @items.PostalCode </text>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2" style="text-align:center">Practitioner Details</th>
+            </tr>
+            <tr>
+                <th scope="row">Practitioner ID :</th>
+                <td>71081332</td>
+            </tr>
+            <tr>
+                <th scope="row">Practitioner Name :</th>
+                <td>Practitioner/smart-Practitioner-71081332</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Json View</h5>
+                </div>
+                <div class="modal-body">
+                    <pre>@Model.ResourceRawJsonData</pre>
+                    <pre>@Model.LabRequestRawJsonData</pre>
+                    <pre>@Model.LabResultRawJsonData</pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div style="width:50%;">
+            <a href="/LabRequest/GenerateLabRequest" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Generate Lab Request</a>
+
+
+
+            <a href="@Url.Action("ListByPatient","LabList")@("?patientId="+@Model.patient.Id)" class="btn btn-success btn-lg active" role="button">View Lab</a>
+        </div>
+        <div style="float:right;width:50%;" >
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModalScrollable">View Raw Json</button>
+            <a href="/" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Back</a>
+        </div>
+    </div>
+
+
+}
+
+

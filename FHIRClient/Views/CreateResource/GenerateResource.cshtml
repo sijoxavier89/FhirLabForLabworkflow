@@ -1,0 +1,34 @@
+﻿@model FHIRClient.Models.CreateResourceViewModel
+
+@{
+    ViewBag.Title = "GenerateResource";
+}
+
+@if (Model.PatientJsonDataRecieved != null)
+{
+    <p>Resource is available at: @Model.ReturnedPatient.Id</p>
+}
+
+@if (Model.ResourceRawJsonData != null)
+{
+     <div class="content-error">
+         <pre>@Model.ResourceRawJsonData</pre>
+     </div>
+}
+else
+{
+    <div class="content-left">
+        Raw JSON data sent to the Server
+        <pre>@Model.PatientJsonDataSent</pre><br>
+    </div>
+
+    <div class="content-right">
+        Raw JSON data received from the Server
+        <pre>@Model.PatientJsonDataRecieved</pre>
+    </div>
+}
+
+
+<p>@Html.ActionLink("Back To Create", "Index", "CreateResource")</p>
+<p>@Html.ActionLink("Main Navigation", "Index", "Index")</p>
+

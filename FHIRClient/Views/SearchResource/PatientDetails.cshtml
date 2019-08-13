@@ -1,0 +1,106 @@
+﻿@using Hl7.Fhir.Model
+@model FHIRClient.Models.FHIRViewModel
+
+
+@{
+    ViewBag.Title = "PatientDetails";
+
+}
+
+<div class="content-left">
+    @if (Model.patient != null)
+    {
+        <h3><u>Patient Details</u> : </h3>
+        <p>Patient ID : @Model.patient.Id</p>
+        <p>Patient Name : @Model.patient.Name[0]</p>
+        <p>Patient Date Of Birth : @Model.patient.BirthDate</p>
+        <p>Gender : @Model.patient.Gender</p>
+        <hr>
+    }
+
+
+    @if (Model.encounters != null)
+    {
+        <h3><u>Encounter Count</u> :  @Model.encounters.Count</h3>
+        foreach (var item in Model.encounters)
+        {
+            <text><strong>Encounter Details</strong> : @item.Id / @item.Period.Start / @item.Class.Code / @item.Period.Start / @item.Period.End</text><br>
+        }
+        <br><hr>
+    }
+
+
+
+    @if (Model.medicationOrders != null)
+    {
+        <h3><u>Medications Count</u> : @Model.medicationOrders.Count</h3>
+        foreach (var item in Model.medicationOrders)
+        {
+            <text><strong>Medication Details</strong> : @item.Id / @item.AuthoredOn / @item.Status / @item.Subject.Reference
+
+            @if (item.DosageInstruction != null)
+            {
+                foreach (var di in item.DosageInstruction)
+                {
+                    <text> / @di.Text / @di.Timing.Repeat.Frequency / @di.Timing.Repeat.Period / @di.Timing.Repeat.PeriodUnit </text>
+                }
+            }
+            </text>
+            <br>
+        }
+        <br><hr>
+    }
+
+
+    @if (Model.conditions != null)
+    {
+        <h3><u>Conditions Count</u> : @Model.conditions.Count</h3>
+        foreach (var item in Model.conditions)
+        {
+            <text><strong>Condition Details</strong> : @item.Id / @(item.AssertedDate == null ? "null" : item.AssertedDate)
+            @foreach (var cc in item.Code.Coding)
+            {
+                <text> /=/ @cc.Code / @cc.Display </text>
+            }
+            </text>
+            <br>
+
+        }
+        <br><hr>
+    }
+
+
+    @if (Model.observations != null)
+    {
+        <h3><u>Observations Count</u> : @Model.observations.Count</h3>
+        foreach (var item in Model.observations)
+        {
+            <text><strong>Observation Details</strong> : @item.Status / @(item.Effective == null ? "null" : item.Effective.ToString())
+            / @(item.Value != null && item.Value.TypeName == "SimpleQuantity" ? ((SimpleQuantity)item.Value).Value.ToString() : "null")
+            / @(item.Value != null && item.Value.TypeName == "SimpleQuantity" ? ((SimpleQuantity)item.Value).Unit : "null")
+
+            @foreach (var co in (item.Code).Coding)
+            {
+                <text> /=/   @co.Code /  @co.Display </text>;
+            }
+            </text>
+            <br>
+
+        }
+        <br>
+    }
+
+</div>
+
+<div class="content-right">
+    <h3>Raw JSON Format :</h3>
+    <pre>@Model.ResourceRawJsonData</pre>
+</div>
+
+<p>@Html.ActionLink("Back To Search", "Index", "SearchResource")</p>
+<p>@Html.ActionLink("Main Navigation", "Index", "Index")</p>
+
+
+
+
+

@@ -1,0 +1,53 @@
+﻿@model FHIRClient.Models.CreateResourceViewModel
+
+@{
+    ViewBag.Title = "Create Resource";
+}
+
+<div>
+    @using (Html.BeginForm("GenerateResource", "CreateResource", FormMethod.Post))
+    {
+        <div class="body-content">
+            <table border="1">
+                <tr>
+                    <td>
+                        <label>Enter Prefix :</label>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.patientPrefix, new List<SelectListItem>
+                                                               {     new SelectListItem{Text="Mr", Value="Mr"},
+                                                                     new SelectListItem{Text="Mrs", Value="Mrs"}
+                                                                })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Enter First Name : </label>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.patientFirstname)
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Enter Family Name : </label> </td>
+                    <td>@Html.TextBoxFor(m => m.patientFamilyName)</td>
+                </tr>
+                <tr>
+                    <td><label>Enter Gender : </label> </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.patientGender, new List<SelectListItem>
+                                                               {     new SelectListItem{Text="Male", Value = "Male" },
+                                                                     new SelectListItem{Text="Female", Value = "Female"}
+                                                               })
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Enter Date Of Birth : </label> </td>
+                    <td>@Html.TextBoxFor(model => model.patientDateOfBirth, "{0:yyyy-mm-dd}", new { @class = "datepicker", placeholder = "YYYY-MM-DD", maxlength = "15" })</td>
+                </tr>
+            </table>
+            <input type="submit" value="Submit" />
+        </div>
+    }
+</div>
+

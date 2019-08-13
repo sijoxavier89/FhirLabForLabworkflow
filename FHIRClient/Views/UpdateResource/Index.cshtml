@@ -1,0 +1,61 @@
+﻿@model FHIRClient.Models.UpdateResourceViewModel
+
+@{
+    ViewBag.Title = "Update Resource";
+}
+
+<div>
+    @using (Html.BeginForm("UpdateResource", "UpdateResource", FormMethod.Post))
+    {
+        <table border="1">
+            <tr>
+                <td>
+                    <label>Enter PatientID : </label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.patientID)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Enter Prefix : </label>
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.patientPrefixUpdate, new List<SelectListItem>
+                                                               {     new SelectListItem{Text="Mr", Value="Mr"},
+                                                                     new SelectListItem{Text="Mrs", Value="Mrs"}
+                                                                })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Enter First Name : </label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.patientFirstnameUpdate)
+                </td>
+            </tr>
+            <tr>
+                <td><label>Enter Family Name : </label> </td>
+                <td>@Html.TextBoxFor(m => m.patientFamilyNameUpdate)</td>
+            </tr>
+            <tr>
+                <td><label>Enter Gender : </label> </td>
+                <td>
+                    @Html.DropDownListFor(m => m.patientGenderUpdate, new List<SelectListItem>
+                                                               {     new SelectListItem{Text="Male", Value = "Male" },
+                                                                     new SelectListItem{Text="Female", Value = "Female"}
+                                                               })
+                </td>
+            </tr>
+            <tr>
+                <td><label>Enter Date Of Birth : </label> </td>
+                <td>@Html.TextBoxFor(model => model.patientDateOfBirthUpdate, "{0:yyyy-mm-dd}", new { @class = "datepicker", placeholder = "YYYY-MM-DD", maxlength = "15" })</td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Update Resource" />
+    }
+
+</div>
+

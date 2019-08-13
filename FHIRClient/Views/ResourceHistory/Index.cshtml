@@ -1,0 +1,46 @@
+﻿
+@model FHIRClient.Models.ResourceHistory.ResourceHistoryViewModel
+
+@{
+    ViewBag.Title = "Resource History";
+}
+
+@using (Html.BeginForm("Index", "ResourceHistory", FormMethod.Post))
+{
+    <div>
+        <label> Enter Patient ID : </label>
+
+        &nbsp;&nbsp;
+
+        @Html.TextBoxFor(m => m.patientID)
+
+        &nbsp;&nbsp;
+        <input type="submit" value="Get Data" />
+    </div>
+}
+
+
+@if (ViewBag.patientHistory != null)
+{
+    <div class="content-left">
+        <h4>History Of Patient</h4>
+        <pre>@ViewBag.patientHistory</pre>
+    </div>
+}
+
+@if (ViewBag.operationOutcomeText != null)
+{
+    <div class="content-right">
+       <h4> Div Element of History</h4>
+       @Html.Raw(ViewBag.operationOutcomeText)
+    </div>
+}
+
+@if (ViewBag.error != null)
+{
+    <div class="content-error">
+        <pre>@ViewBag.error</pre>
+    </div>
+}
+
+<p>@Html.ActionLink("Main Navigation", "Index", "Index")</p>

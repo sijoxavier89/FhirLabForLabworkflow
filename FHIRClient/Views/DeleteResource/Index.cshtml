@@ -1,0 +1,27 @@
+﻿@model FHIRClient.Models.DeleteResourceViewModel
+
+@{
+    ViewBag.Title = "Delete Resource";
+}
+
+
+<div>
+    @using (Html.BeginForm("Index", "DeleteResource", FormMethod.Post))
+    {
+        <label>Enter Patient ID : </label>
+
+        @Html.TextBoxFor(m => m.patientID)      
+
+        <input type="submit" value="Delete Resource" />
+    }
+
+    @if (ViewBag.showData != null)
+    {
+        <div class="content-error">
+            <pre>@ViewBag.showData</pre>
+        </div>
+    }
+
+</div>
+
+<p>@Html.ActionLink("Main Navigation", "Index", "Index")</p>

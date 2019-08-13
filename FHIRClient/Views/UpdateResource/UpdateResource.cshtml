@@ -1,0 +1,29 @@
+﻿@model FHIRClient.Models.UpdateResourceViewModel
+
+@{
+    ViewBag.Title = "UpdateResource";
+}
+
+@if (Model.ResourceRawJsonData != null)
+{
+    <div class="content-error">
+        <pre>@Model.ResourceRawJsonData</pre>
+    </div>
+}
+else
+{
+    <div class="content-left">
+        Old Patient Info :
+        <pre>@Model.patientDetailsOld</pre>
+    </div>
+    <div class="content-right">
+        Updated Patient Info :
+        <pre>@Model.patientDetailsUpdated</pre>
+    </div>
+}
+
+
+
+
+<p>@Html.ActionLink("Back To Update", "Index", "UpdateResource")</p>
+<p>@Html.ActionLink("Main Navigation", "Index", "Index")</p>

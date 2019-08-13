@@ -1,0 +1,29 @@
+﻿@model FHIRWorkFlowLab.Models.Login.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="py-5" style="width: 100%;max-width: 500px;padding: 15px;margin: auto;">
+    <h2 style="text-align:center">LOGIN FORM</h2>
+    @using (Html.BeginForm("redirectToPage", "Login", FormMethod.Post))
+    {
+        <form class="form-signin">
+            <div class="form-group">
+                <label>Email</label>
+                @Html.TextBoxFor(m => m.email, new { placeholder = "email@example.com", @class = "form-control required" })
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                @Html.PasswordFor(m => m.password, new { placeholder = "Password", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                @Html.DropDownListFor(m => m.role, new List<SelectListItem> { new SelectListItem { Text = "Practitioner", Value = "practitioner"},
+                                                                             new SelectListItem { Text = "LabTechnician", Value = "labTechnician" }},
+                                                                             new { @class = "form-control" })
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+        </form>
+    }
+</div>

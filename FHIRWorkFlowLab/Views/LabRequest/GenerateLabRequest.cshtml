@@ -1,0 +1,102 @@
+﻿@model FHIRWorkFlowLab.Models.LabRequest.LabRequestViewModel
+
+@{
+    ViewBag.Title = "Lab Request";
+}
+
+<div class="py-5">
+    <h2 style="text-align:center">LAB REQUEST FORM</h2>
+    @using (Html.BeginForm("Create", "LabRequest", FormMethod.Post))
+    {
+        <form>
+            <div class="form-group">
+                <label class="font-weight-bold">Patient ID</label>
+                @foreach (var item in Model.Patient.Identifier)
+                {
+                    @Html.TextBoxFor(Model => item.Value, new { @class = "form-control" })
+                }
+                
+                @Html.HiddenFor(Model => Model.Patient.Id,new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold">Name</label>
+                <input type="text" class="form-control" id="name" value="@Model.Patient.Name[0]">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="font-weight-bold">Gender</label>
+                    <input type="text" class="form-control" id="gender" value="@Model.Patient.Gender">
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="font-weight-bold">Date-Of-Birth</label>
+                    <input type="text" class="form-control" id="DOB" value="@Model.Patient.BirthDate">
+                </div>
+            </div>
+            @foreach (var items in Model.Patient.Address)
+                        {
+                            foreach (var address in items.Line)
+                            {
+                    <div class="form-group">
+                        <label class="font-weight-bold">Address</label>
+                        <input type="text" class="form-control" id="Address" value="@address">
+                    </div>
+                }
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label class="font-weight-bold">City</label>
+                        <input type="text" class="form-control" id="City" value="@items.City">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="font-weight-bold">State</label>
+                        <input type="text" class="form-control" id="City" value="@items.State">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="font-weight-bold">Zip</label>
+                        <input type="text" class="form-control" id="Zip" value="@items.PostalCode">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="font-weight-bold">Country</label>
+                        <input type="text" class="form-control" id="Country" value="@items.Country">
+                    </div>
+                </div>
+            }
+            <fieldset class="form-group">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0 font-weight-bold">Sample Details</legend>
+                    <div class="col-sm-10">
+                        <div class="custom-control custom-radio">
+                            @Html.RadioButtonFor(Model => Model.Sample, "Blood")
+                            <label>Blood</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            @Html.RadioButtonFor(Model => Model.Sample, "Urine")
+                            <label> Urine</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            @Html.RadioButtonFor(Model => Model.Sample, "Tissue")
+                            <label>Tissue</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group row">
+                <div class="col-sm-2 font-weight-bold">BioChemistry</div>
+                <div class="col-sm-10">
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButtonFor(Model => Model.Biochemistry, "Glucose",new { @checked = "checked" })
+                        <label>Glucose</label>
+                    </div>
+                    <div class="custom-control custom-radio">                      
+                        @Html.RadioButtonFor(Model => Model.Biochemistry, "Platelets")
+                        <label> Platelets</label>
+                    </div>
+                    <div class="custom-control custom-radio">                     
+                        @Html.RadioButtonFor(Model => Model.Biochemistry, "Haemoglobin")
+                        <label>Haemoglobin</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Send Request</button>
+        </form>
+    }
+</div>
