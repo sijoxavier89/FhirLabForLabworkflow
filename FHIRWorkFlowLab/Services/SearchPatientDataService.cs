@@ -37,8 +37,6 @@ namespace FHIRWorkFlowLab.Models.SearchPatient
                 var resourceLink = string.Format("{0}|{1}", "www.citiustech.com", patientMRN);
                 parms.Add("identifier", resourceLink);
 
-                //var ResourceUrl = ("/Patient?identifier=www.citiustech.com|" + this.patientMRN);
-
                 //Reading the Patient details using the FHIR Client
                 var patientDetailsRead = FhirClient.Search<Patient>(parms);
 
@@ -51,15 +49,20 @@ namespace FHIRWorkFlowLab.Models.SearchPatient
                 vm.patient = result.Entry.Select(Resource => (Patient)Resource.Resource).ToList().FirstOrDefault();
 
                 LabService labService = new LabService();
-                var labResults = labService.GetLabResultsByPatientId(vm.patient.Id);
-                var labRequests = labService.GetLabResultsByPatientId(vm.patient.Id);
+                if (vm.patient != null)
+                {
+                    var labResults = labService.GetLabResultsByPatientId(vm.patient.Id);
+                    var labRequests = labService.GetLabResultsByPatientId(vm.patient.Id);
 
-                //Displaying the RAW json data in the view 
-                vm.ResourceRawJsonData = JValue.Parse(patientDetails).ToString();
+                    vm.LabRequestRawJsonData = JValue.Parse(fhirJsonSerializer.SerializeToString(labResults)).ToString();
 
-                vm.LabRequestRawJsonData = JValue.Parse(fhirJsonSerializer.SerializeToString(labResults)).ToString();
+                    vm.LabResultRawJsonData = JValue.Parse(fhirJsonSerializer.SerializeToString(labRequests)).ToString();
+                }
 
-                vm.LabResultRawJsonData = JValue.Parse(fhirJsonSerializer.SerializeToString(labRequests)).ToString();
+                    //Displaying the RAW json data in the view 
+                    vm.ResourceRawJsonData = JValue.Parse(patientDetails).ToString();
+
+               
             }
             catch (FhirOperationException FhirOpExec)
             {
